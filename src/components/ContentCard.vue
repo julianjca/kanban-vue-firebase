@@ -59,7 +59,7 @@ export default {
       this.buttonOne = 'Finished'
       this.buttonTwo = 'To-Do'
     } else if (this.name === 'Finished') {
-      this.buttonOne = 'To-Do'
+      this.buttonOne = 'On-Going'
       this.buttonTwo = null
     }
   }
