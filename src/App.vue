@@ -4,6 +4,15 @@
   </div>
 </template>
 
+<script>
+export default {
+  created () {},
+  data: function () {
+    return {}
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

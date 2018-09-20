@@ -3,7 +3,7 @@
     <MainHeader></MainHeader>
     <div class="container">
       <div class="container-card">
-        <KanbanCard v-for="(data,index) in taskData" :key="index" :data="data"></KanbanCard>
+        <KanbanCard v-for="(data,index) in taskLists" :key="index" :data="data"></KanbanCard>
       </div>
     </div>
   </div>
@@ -13,7 +13,54 @@
 // @ is an alias to /src
 import MainHeader from '@/components/MainHeader.vue'
 import KanbanCard from '@/components/KanbanCard.vue'
+// import database from '../assets/config.js'
+
 import database from '../assets/config.js'
+
+const taskData = [
+  {
+    name: 'Pre-Log',
+    data: []
+  },
+  {
+    name: 'To-Do',
+    data: []
+  },
+  {
+    name: 'On-Going',
+    data: []
+  },
+  {
+    name: 'Finished',
+    data: []
+  }
+]
+var leadsRef = database.ref('/')
+leadsRef.on('value', function (snapshot) {
+  taskData[0].data = []
+  taskData[1].data = []
+  taskData[2].data = []
+  taskData[3].data = []
+  snapshot.forEach(function (childSnapshot) {
+    if (childSnapshot.val().status === 'Pre-Log') {
+      const obj = childSnapshot.val()
+      obj.id = childSnapshot.key
+      taskData[0].data.push(obj)
+    } else if (childSnapshot.val().status === 'To-Do') {
+      const obj = childSnapshot.val()
+      obj.id = childSnapshot.key
+      taskData[1].data.push(obj)
+    } else if (childSnapshot.val().status === 'On-Going') {
+      const obj = childSnapshot.val()
+      obj.id = childSnapshot.key
+      taskData[2].data.push(obj)
+    } else {
+      const obj = childSnapshot.val()
+      obj.id = childSnapshot.key
+      taskData[3].data.push(obj)
+    }
+  })
+})
 
 export default {
   name: 'home',
@@ -23,52 +70,12 @@ export default {
   },
   data: function () {
     return {
-      taskData: [
-        {
-          name: 'Pre-Log',
-          data: []
-        },
-        {
-          name: 'To-Do',
-          data: []
-        },
-        {
-          name: 'On-Going',
-          data: []
-        },
-        {
-          name: 'Pre-Log',
-          data: []
-        }
-      ]
+      taskLists: taskData
     }
   },
   methods: {},
-  created () {
-    let self = this
-    var leadsRef = database.ref('/')
-    console.log(leadsRef)
-    leadsRef.on('value', function (snapshot) {
-      console.log('masuk')
-      console.log(snapshot.val())
-      snapshot.forEach(function (childSnapshot) {
-        if (childSnapshot.val().status === 'prelog') {
-          const obj = childSnapshot.val()
-          obj.id = childSnapshot.key
-          self.taskData[0].data.push(obj)
-        } else if (childSnapshot.val().status === 'todo') {
-          const obj = childSnapshot.val()
-          self.taskData[1].data.push(obj)
-        } else if (childSnapshot.val().status === 'ongoing') {
-          const obj = childSnapshot.val()
-          self.taskData[2].data.push(obj)
-        } else {
-          const obj = childSnapshot.val()
-          self.taskData[3].data.push(obj)
-        }
-      })
-    })
-  }
+  created () {},
+  mounted () {}
 }
 </script>
 

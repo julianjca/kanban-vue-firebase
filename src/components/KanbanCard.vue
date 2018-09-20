@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <h2>{{data.name}}</h2>
-    <ContentCard v-for="(item) in data.data" :key="item.id" :item="item"></ContentCard>
+    <ContentCard v-for="(item) in data.data" :key="item.id" :item="item" :name="data.name"></ContentCard>
   </div>
 </template>
 

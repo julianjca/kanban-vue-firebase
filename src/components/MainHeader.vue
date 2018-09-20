@@ -21,10 +21,13 @@ export default {
     sendItem () {
       database.ref('/').push({
         title: this.taskName,
-        status: 'prelog'
+        status: 'Pre-Log'
       })
       this.taskName = ''
     }
+    // deleteArr () {
+    //   this.$emit('deleting-array')
+    // }
   }
 }
 </script>
